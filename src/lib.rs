@@ -4,31 +4,40 @@ mod communication;
 mod core;
 mod error;
 mod utils;
-use std::sync::Once;
 
 use crate::args::{Arguments, ArgumentsParser};
 use crate::communication::resolve_host;
 use crate::communication::{new_krb_channel, KdcComm};
 use crate::core::{EmptyVault, FileVault, Vault};
 use crate::error::Result;
-use log::error;
+use log::{error, set_logger, set_max_level, LevelFilter};
 use stderrlog;
+use std::sync::Once;
 
 static INIT_LOGGER: Once = Once::new();
 
+/// Initializes logging only once
 pub fn init_log(verbosity: usize) {
     INIT_LOGGER.call_once(|| {
-        stderrlog::new()
+        let _ = stderrlog::new()
             .module(module_path!())
             .verbosity(verbosity)
+            .timestamp(stderrlog::Timestamp::Second)
             .init()
-            .expect("Failed to initialize logger");
+            .ok(); // Prevents panic if logger is already set
     });
+
+    log::set_max_level(LevelFilter::Trace); // Ensure logs are printed
 }
+
+fn reset_logger() {
+    set_max_level(LevelFilter::Off); // Disable logging so the next command can reinitialize it
+}
+
 
 /// Entry function for CLI execution, accepts command-line arguments
 pub fn run(args: Arguments) -> Result<()> {
-    match args {
+    let result = match args {
         Arguments::Ask(args) => ask(args),
         Arguments::AsRepRoast(args) => asreproast(args),
         Arguments::Brute(args) => brute(args),
@@ -37,7 +46,12 @@ pub fn run(args: Arguments) -> Result<()> {
         Arguments::Hash(args) => hash(args),
         Arguments::KerbeRoast(args) => kerberoast(args),
         Arguments::List(args) => list(args),
-    }
+    };
+
+    // Reset the logger so new commands can initialize logging properly
+    reset_logger();
+
+    result
 }
 
 /// Individual command implementations
