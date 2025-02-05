@@ -21,6 +21,13 @@ git clone https://gitlab.com/Zer1t0/cerbero.git
 cd cerbero/
 cargo install --path .
 ```
+From source:
+```sh
+git clone https://gitlab.com/Zer1t0/cerbero.git
+cd cerbero/
+cargo build [--release]
+```
+
 
 ## Commands
 - [ask](#ask)
