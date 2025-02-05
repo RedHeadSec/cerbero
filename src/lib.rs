@@ -4,6 +4,7 @@ mod communication;
 mod core;
 mod error;
 mod utils;
+use std::sync::Once;
 
 use crate::args::{Arguments, ArgumentsParser};
 use crate::communication::resolve_host;
@@ -13,13 +14,16 @@ use crate::error::Result;
 use log::error;
 use stderrlog;
 
-/// Initializes logging
+static INIT_LOGGER: Once = Once::new();
+
 pub fn init_log(verbosity: usize) {
-    stderrlog::new()
-        .module(module_path!())
-        .verbosity(verbosity)
-        .init()
-        .unwrap();
+    INIT_LOGGER.call_once(|| {
+        stderrlog::new()
+            .module(module_path!())
+            .verbosity(verbosity)
+            .init()
+            .expect("Failed to initialize logger");
+    });
 }
 
 /// Entry function for CLI execution, accepts command-line arguments
