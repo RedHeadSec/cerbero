@@ -16,7 +16,7 @@ use std::sync::Once;
 
 static INIT_LOGGER: Once = Once::new();
 
-/// Initializes logging only once
+/// Initializes logging only once - This is called in main program if workin with a library form.
 pub fn init_log(verbosity: usize) {
     INIT_LOGGER.call_once(|| {
         let _ = stderrlog::new()
