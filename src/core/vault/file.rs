@@ -2,7 +2,7 @@ use super::Vault;
 use crate::core::CredFormat;
 use crate::core::{TicketCred, TicketCreds};
 use crate::error::Error;
-use crate::KrbUser;
+use crate::core::KrbUser;
 use crate::Result;
 use kerberos_asn1::{Asn1Object, KrbCred};
 use kerberos_ccache::CCache;

@@ -1,5 +1,5 @@
 use crate::core::{craft_ticket_info, CredFormat, TicketCreds, Vault};
-use crate::KrbUser;
+use crate::core::KrbUser;
 use crate::Result;
 use kerberos_crypto::Key;
 use ms_pac::PISID;

@@ -1,5 +1,5 @@
 use crate::core::{CredFormat, TicketCred, TicketCreds};
-use crate::KrbUser;
+use crate::core::KrbUser;
 use crate::Result;
 
 pub trait Vault {

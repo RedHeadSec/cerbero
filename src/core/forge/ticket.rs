@@ -2,7 +2,7 @@ use crate::core::{
     new_nt_principal, new_principal_or_srv_inst, new_signed_pac, Cipher,
     TicketCred,
 };
-use crate::KrbUser;
+use crate::core::KrbUser;
 use chrono::{Duration, Utc};
 use kerberos_asn1::{
     Asn1Object, AuthorizationDataEntry, EncTicketPart, EncryptedData,

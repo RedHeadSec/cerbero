@@ -29,3 +29,13 @@ rand = "0.6"
 trust-dns-resolver = "0.20"
 log = "0.4"
 stderrlog = "0.4"
+
+# Define library
+[lib]
+name = "cerbero"
+path = "src/lib.rs"
+
+# Define binary
+[[bin]]
+name = "cerbero_bin"
+path = "src/main.rs"
